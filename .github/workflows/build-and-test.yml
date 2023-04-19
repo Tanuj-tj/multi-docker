@@ -8,20 +8,22 @@ jobs:
 
     services:
       docker:
+        # specify the Docker image to use
+        image: docker:20.10.9-dind
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Build and test React client
-      run: docker build -t tanuj/react-test -f ./client/Dockerfile.dev ./client
+      - name: Build and test React client
+        run: docker build -t tanuj/react-test -f ./client/Dockerfile.dev ./client
           
-    - name: Run tests on React client
-      run: docker run tanuj/react-test npm test -- --coverage
+      - name: Run tests on React client
+        run: docker run tanuj/react-test npm test -- --coverage
 
-    - name: Build Docker images
-      run: |
-        docker build -t tanuj/multi-client ./client
-        docker build -t tanuj/multi-nginx ./nginx
-        docker build -t tanuj/multi-server ./server
-        docker build -t tanuj/multi-worker ./worker
+      - name: Build Docker images
+        run: |
+          docker build -t tanuj/multi-client ./client
+          docker build -t tanuj/multi-nginx ./nginx
+          docker build -t tanuj/multi-server ./server
+          docker build -t tanuj/multi-worker ./worker
