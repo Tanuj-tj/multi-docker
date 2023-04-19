@@ -19,7 +19,7 @@ jobs:
         run: docker build -t tanuj/react-test -f ./client/Dockerfile.dev ./client
           
       - name: Run tests on React client
-        run: docker run tanuj/react-test npm test -- --coverage
+        run: docker run -e CI=true tanuj/react-test npm test
 
       - name: Build Docker images
         run: |
